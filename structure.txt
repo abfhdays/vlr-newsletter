@@ -1,21 +1,47 @@
-valorant-newsletter/
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   ├── core/
-│   │   ├── models/
-│   │   ├── schemas/
-│   │   ├── services/
-│   │   └── tasks/
-│   ├── scraper/
-│   ├── templates/
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   └── services/
-│   └── package.json
-├── docker-compose.yml
-└── README.md
+vlr-newsletter/
+  docker-compose.yml
+  .env.example
+
+  backend/
+    pyproject.toml
+    app/
+      api/
+        __init__.py
+        routes_health.py
+        routes_preferences.py
+        routes_ingest.py
+        routes_content.py          # read-only content for frontend
+      datasource/
+        __init__.py
+        types.py
+        base.py
+        api_client.py              # mock for now
+      db/
+        __init__.py
+        models.py
+        session.py
+      services/
+        __init__.py
+        scoring.py
+        selection.py
+      settings.py
+      main.py
+    worker/
+      celery_app.py
+      tasks.py
+    alembic/
+      env.py
+      script.py.mako
+
+  frontend/
+    pyproject.toml
+    web/
+      main.py                      # FastAPI + Jinja (UI only)
+      routes_ui.py
+      templates/
+        base.html
+        dashboard.html
+        preview.html
+        email_issue.html
+      static/
+        tailwind.css               # or use CDN
