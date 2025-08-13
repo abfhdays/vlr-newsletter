@@ -1,0 +1,12 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+strawberry-graphql==0.227.4
+jinja2==3.1.4
+httpx==0.27.0
+sqlalchemy==2.0.30
+python-dateutil==2.9.0.post0
+apscheduler==3.10.4
+pydantic==2.10.5
+requests==2.31.0
+bs4==0.0.1
+beautifulsoup4==4.12.2
