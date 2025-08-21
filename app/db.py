@@ -1,23 +1,17 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
-from datetime import datetime
-from sqlalchemy import Column, DateTime
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-engine = create_engine("sqlite:///./vlr.db", future=True)
+# SQLite file in project root
+engine = create_engine(
+    "sqlite:///./vlr.db",
+    future=True,
+    connect_args={"check_same_thread": False},  # avoids thread issue on Windows/reloader
+    pool_pre_ping=True,
+)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 
 class Base(DeclarativeBase):
     pass
-
-class User(Base):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-
 
 def get_db():
     db = SessionLocal()
@@ -25,3 +19,4 @@ def get_db():
         yield db
     finally:
         db.close()
+

@@ -1,4 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hello from Preview</h1>
+<h2 class="text-xl font-semibold mb-4">Newsletter Preview</h2>
+<div class="bg-white border rounded">
+  {% include "email_issue.html" %}
+</div>
 {% endblock %}

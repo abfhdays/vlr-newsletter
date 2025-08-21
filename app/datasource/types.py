@@ -20,3 +20,4 @@ class MatchDTO(BaseModel):
     score_b: int | None = None
     bo: int | None = None
     url: str | None = None
+

@@ -1,4 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hello from Dashboard</h1>
+<h2 class="text-xl font-semibold mb-4">Dashboard</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <section>
+    <h3 class="font-semibold mb-2">Articles (last 7 days)</h3>
+    <ul class="space-y-2">
+      {% for a in articles %}
+        <li class="p-3 bg-white border rounded">
+          <a href="{{ a.url }}" class="font-medium underline" target="_blank">{{ a.title }}</a>
+          {% if a.published_at %}
+            <div class="text-sm text-slate-500">{{ a.published_at }}</div>
+          {% endif %}
+        </li>
+      {% endfor %}
+      {% if not articles or articles|length == 0 %}
+        <li class="p-3 bg-white border rounded text-slate-500">No articles yet</li>
+      {% endif %}
+    </ul>
+  </section>
+
+  <section>
+    <h3 class="font-semibold mb-2">Matches (last 7 days)</h3>
+    <ul class="space-y-2">
+      {% for m in matches %}
+        <li class="p-3 bg-white border rounded">
+          <div class="font-medium">
+            {{ m.team_a }} vs {{ m.team_b }}
+            {% if m.score_a is not none %} — {{ m.score_a }} : {{ m.score_b }}{% endif %}
+          </div>
+          {% if m.event %}<div class="text-sm text-slate-500">{{ m.event }} {{ m.stage }}</div>{% endif %}
+          {% if m.date_time %}<div class="text-xs text-slate-500">{{ m.date_time }}</div>{% endif %}
+          {% if m.url %}<a class="text-sm underline" target="_blank" href="{{ m.url }}">Match page</a>{% endif %}
+        </li>
+      {% endfor %}
+      {% if not matches or matches|length == 0 %}
+        <li class="p-3 bg-white border rounded text-slate-500">No matches yet</li>
+      {% endif %}
+    </ul>
+  </section>
+</div>
+
+<div class="mt-6 text-sm text-slate-600">
+  Tip: open <code>/graphql</code> and run <code>mutation { fetchLastWeek }</code>, then refresh.
+</div>
 {% endblock %}
